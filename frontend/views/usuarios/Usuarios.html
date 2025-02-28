@@ -4,6 +4,7 @@ function Usuarios() {
 
   const [dataSource, setDataSource] = useState([]);
   useEffect(listarUsuarios, []);
+  const history = useHistory();
 
   function listarUsuarios() {
     google.script.run
@@ -15,6 +16,13 @@ function Usuarios() {
           arreglo.push({
             key: usuario.id,
             ...usuario,
+            acciones:
+              <Button
+                onClick={() => {
+                  history.push("/formularioRegistro/" + usuario.id);
+                }}>
+                Editar
+              </Button>
           })
         })
 
@@ -40,11 +48,18 @@ function Usuarios() {
       dataIndex: 'contraseña',
       key: 'contraseña',
     },
+    {
+      title: 'Acciones',
+      dataIndex: 'acciones',
+      key: 'acciones',
+    },
   ];
 
   return (
     <Table dataSource={dataSource} columns={columns} />
   )
 }
+
+
 
 //</script>
